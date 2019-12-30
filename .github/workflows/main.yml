@@ -5,6 +5,7 @@ on: [push]
 
 jobs:
   publish-canary:
+    name: Publish Canary Version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Master
@@ -39,7 +40,7 @@ jobs:
                 echo "Skipping canary publish due to a fork/PR..."
             fi
   test:
-    name: Testing on ${{matrix.os}} and ${{matrix.node}}
+    name: Testing on ${{matrix.os}} and ${{matrix.node_version}}
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
@@ -48,10 +49,10 @@ jobs:
     steps:
       - name: Checkout Master
         uses: actions/checkout@v1
-      - name: Use Node
+      - name: Use Node ${{matrix.node_version}}
         uses: actions/setup-node@master
         with:
-          node-version: '13.x'
+          version: ${{ matrix.node_version }}
       - name: Get yarn cache
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
