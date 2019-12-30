@@ -1,5 +1,5 @@
 import { file, FileCallback } from 'tmp'
-import { ensureFileSync, createFileSync } from 'fs-extra';
+import { ensureFileSync, createFileSync, unlinkSync } from 'fs-extra';
 
 export const createTmpFile = (options: any) => new Promise<{ name: string, cleanupCallback: Function }>((resolve, reject) => {
   const callback: FileCallback = (err: Error, filename: string, cleanupCallback: any) => {
@@ -10,7 +10,10 @@ export const createTmpFile = (options: any) => new Promise<{ name: string, clean
       ensureFileSync(filename);
       createFileSync(filename);
       resolve({
-        cleanupCallback,
+        cleanupCallback: () => {
+          unlinkSync(filename);
+          cleanupCallback();
+        },
         name: filename,
       })
     }
