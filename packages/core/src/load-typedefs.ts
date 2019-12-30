@@ -161,7 +161,7 @@ export async function loadTypedefs<AdditionalConfig = {}>(pointerOrPointers: Unn
 
     loadPromises$.push(
       Promise.resolve().then(async () => {
-        const paths = await globby(foundGlobs, { absolute: true, ...options, ignore: [] });
+        const paths = await globby(foundGlobs.map(fixWindowsPath), { absolute: true, ...options, ignore: [] });
         await Promise.all(
           paths.map(async path => {
             if (!path.endsWith('.d.ts') && !path.endsWith('.spec.ts') && !path.endsWith('.spec.js') && !path.endsWith('.test.ts') && !path.endsWith('.test.js')) {

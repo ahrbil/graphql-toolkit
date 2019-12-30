@@ -81,8 +81,8 @@ async function tryToLoadFromExport(rawFilePath: string): Promise<GraphQLSchema |
   }
 }
 
-async function tryToLoadFromCodeAst(filePath: string, options?: CodeFileLoaderOptions): Promise<string> {
-  const foundDoc = await gqlPluckFromFile(filePath, options && options.pluckConfig);
+async function tryToLoadFromCodeAst(filePath: string, options: CodeFileLoaderOptions): Promise<string> {
+  const foundDoc = await gqlPluckFromFile(filePath, options.pluckConfig);
   if (foundDoc) {
     return foundDoc;
   } else {
