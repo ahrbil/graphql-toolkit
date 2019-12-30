@@ -1,4 +1,6 @@
 {
+  "name":"ahrbil-graphql-toolkit",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "clean": "lerna clean --yes && rm -rf node_modules",
